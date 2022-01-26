@@ -1,0 +1,13 @@
+name: UBARecode
+version: '${project.version}'
+main: com.somemone.ubarecode.UnitedBaseAlert
+api-version: 1.18
+
+commands:
+  basealert:
+    usage: /ba <generate|info>
+    aliases: [ba, balert]
+
+permissions:
+  basealert.use:
+    default: op

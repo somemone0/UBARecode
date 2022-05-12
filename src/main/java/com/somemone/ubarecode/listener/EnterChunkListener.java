@@ -8,6 +8,7 @@ import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.somemone.ubarecode.UnitedBaseAlert;
 import com.somemone.ubarecode.account.Account;
+import com.somemone.ubarecode.account.AccountType;
 import com.somemone.ubarecode.account.NotifyEnterType;
 import com.somemone.ubarecode.file.FileHandler;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -20,11 +21,14 @@ public class EnterChunkListener implements Listener {
 
     @EventHandler
     public void onPlayerEnter (PlayerEnterTownEvent event) throws TownyException, IOException {
+
         if (!event.getEnteredtown().hasNation()) return;
         Nation nation = event.getEnteredtown().getNation();
         Account account = FileHandler.getNationAccount(nation.getUUID());
         if (account == null) return;
         String message = "";
+
+        if (account.getType() == AccountType.FREE) return;
 
         Resident res = TownyUniverse.getInstance().getResident(event.getPlayer().getUniqueId());
         if (account.getType().equals( NotifyEnterType.ALL )) {
@@ -40,8 +44,8 @@ public class EnterChunkListener implements Listener {
         }
     }
 
-    private void sendTheMessage (Account account, String message) {
+    private void sendTheMessage (Account account, String message) { // i am very lazy
         TextChannel channel = UnitedBaseAlert.jda.getTextChannelById(account.getChannelID());
-        channel.sendMessage(message);
+        channel.sendMessage(message).queue();
     }
 }

@@ -4,6 +4,7 @@ import com.palmergames.bukkit.towny.TownyAPI;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.somemone.ubarecode.account.Account;
+import com.somemone.ubarecode.account.AccountType;
 import com.somemone.ubarecode.file.FileHandler;
 import net.dv8tion.jda.api.MessageBuilder;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class BaseAlertCommand implements CommandExecutor {
         if (args.length != 1) return false;
         if (args[0].equals("ba") && args[1].equals("delete") && args.length == 3) {
             if (!sender.isOp()) return false;
-            OfflinePlayer op = Bukkit.getOfflinePlayer(args[2]);
+            OfflinePlayer op = Bukkit.getOfflinePlayer(args[1]);
             if (op != null && op.hasPlayedBefore()) {
                 try {
                     FileHandler.deleteAccount(op.getPlayer().getUniqueId());
@@ -37,6 +38,7 @@ public class BaseAlertCommand implements CommandExecutor {
                 return true;
             }
         } // Scans for /ba delete <player>
+
         if (!(sender instanceof Player)) return false;
 
         Player player = (Player) sender;
@@ -73,7 +75,7 @@ public class BaseAlertCommand implements CommandExecutor {
             }
 
             if (account == null) {
-                account = new Account(player.getUniqueId());
+                account = new Account(player.getUniqueId(), AccountType.FREE);
             } else {
                 account.generateActivationCode();
             }

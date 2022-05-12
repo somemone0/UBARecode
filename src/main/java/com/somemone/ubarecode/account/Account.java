@@ -11,18 +11,24 @@ public class Account {
 
     private UUID ownerID;
 
+    private LocalDateTime accountExpiration;
+    private AccountType type;
+
     private String channelID;
     private String guildID;
     public boolean everyone;
     private NotifyEnterType enterType;
 
-    public Account (UUID ownerID) {
+    public Account (UUID ownerID, AccountType type) {
         this.ownerID = ownerID;
         everyone = false;
+
+        this.type = type;
 
         channelID = "";
         guildID = "";
         enterType = NotifyEnterType.IF_ENEMY;
+        accountExpiration = LocalDateTime.now().plusMonths(1L).plusDays(1L);
 
         generateActivationCode();
     }
@@ -32,6 +38,10 @@ public class Account {
         for (int i = 0; i < 7; i++) this.activationCode += "abcdefghijklmnopqrstuvwxyz1234567890".charAt(  (int) (Math.random() * 36)  );
 
         this.acExpiration = LocalDateTime.now().plusDays(1L).format(DateTimeFormatter.ISO_DATE_TIME);
+    }
+
+    public void renewSubscription() {
+        accountExpiration = LocalDateTime.now().plusMonths(1L).plusDays(1L);
     }
 
     public boolean validateActivationCode(String code) {
@@ -51,7 +61,9 @@ public class Account {
         return activationCode;
     }
 
-    public NotifyEnterType getType() {return enterType;}
+    public NotifyEnterType getEnterType() {return enterType;}
+
+    public AccountType getType() {return type;}
 
     public UUID getOwnerID() {
         return ownerID;
@@ -65,6 +77,10 @@ public class Account {
         return guildID;
     }
 
+    public LocalDateTime getAccountExpiration() {
+        return accountExpiration;
+    }
+
     public void setEnterType(NotifyEnterType type) {enterType = type;}
 
     public void setChannelID(String channelID) {
@@ -74,5 +90,7 @@ public class Account {
     public void setGuildID(String guildID) {
         this.guildID = guildID;
     }
+
+    public void setType (AccountType type) {this.type = type;}
 
 }

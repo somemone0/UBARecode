@@ -7,6 +7,7 @@ import com.palmergames.bukkit.towny.exceptions.TownyException;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.somemone.ubarecode.UnitedBaseAlert;
 import com.somemone.ubarecode.account.Account;
+import com.somemone.ubarecode.account.AccountType;
 import com.somemone.ubarecode.file.FileHandler;
 import io.github.townyadvanced.flagwar.events.CellAttackEvent;
 import io.github.townyadvanced.flagwar.events.CellWonEvent;
@@ -31,6 +32,9 @@ public class ChunkListener implements Listener {
 
         Account account = FileHandler.getNationAccount(nation.getUUID());
         if (account != null) {
+
+            if (account.getType() == AccountType.FREE) return;
+
             String everyone = "";
             if (account.everyone) {
                 everyone = "@everyone ";
@@ -50,6 +54,9 @@ public class ChunkListener implements Listener {
 
         Account account = FileHandler.getNationAccount(nation.getUUID());
         if (account != null) {
+
+            if (account.getType() == AccountType.FREE) return;
+
             String everyone = "";
             if (account.everyone) {
                 everyone = "@everyone ";

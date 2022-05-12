@@ -92,6 +92,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.github.TheCoder11</groupId>
+            <artifactId>Ro11enSMPCore</artifactId>
+            <version>679789780f</version>
+        </dependency>
+        <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>4.3.0_279</version>

@@ -7,7 +7,12 @@ commands:
   basealert:
     usage: /ba <generate|info>
     aliases: [ba, balert]
+  baseadmin:
+    usage: /baseadmin <renew|create>
+    description: BaseAlert Command for console/mod use
+    aliases: [badmin]
+    permission: basealert.admin
 
 permissions:
-  basealert.use:
+  basealert.admin:
     default: op

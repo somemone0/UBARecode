@@ -1,10 +1,13 @@
 package com.somemone.ubarecode;
 
+import com.somemone.ubarecode.command.BaseAdminCommand;
 import com.somemone.ubarecode.command.BaseAlertCommand;
 import com.somemone.ubarecode.discord.CatcherTask;
 import com.somemone.ubarecode.discord.DiscordListener;
 import com.somemone.ubarecode.listener.ChunkListener;
 import com.somemone.ubarecode.listener.EnemyAddListener;
+import com.somemone.ubarecode.listener.EnterChunkListener;
+import com.somemone.ubarecode.time.AccountCheckTask;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -53,11 +56,15 @@ public final class UnitedBaseAlert extends JavaPlugin {
         jda.addEventListener(new DiscordListener());
 
         this.getCommand("basealert").setExecutor(new BaseAlertCommand());
+        this.getCommand("baseadmin").setExecutor(new BaseAdminCommand());
 
         getServer().getPluginManager().registerEvents(new ChunkListener(), this);
         getServer().getPluginManager().registerEvents(new EnemyAddListener(), this);
+        getServer().getPluginManager().registerEvents(new EnterChunkListener(), this);
 
         catcherInstance.runTaskTimer(this, 0L, 20L);
+        new AccountCheckTask().runTaskTimer(this, 0L, 1200L);
+
 
     }
 

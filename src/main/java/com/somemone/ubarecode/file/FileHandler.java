@@ -95,6 +95,19 @@ public class FileHandler {
 
     }
 
+    public static void saveAllAccounts (List<Account> accounts) throws IOException {
+
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+
+        Gson gson = builder.create();
+
+        String json = gson.toJson(accounts);
+
+        Files.write(UnitedBaseAlert.dataFile.toPath(), Collections.singleton(json));
+
+    }
+
     public static void deleteAccount (UUID ownerID) throws IOException {
         GsonBuilder builder = new GsonBuilder();
 
